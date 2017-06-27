@@ -1,0 +1,38 @@
+import sys
+import random
+import box
+
+if len(sys.argv) == 2:
+    name = str(sys.argv[1])
+else:
+    name = str(input("What is your name? "))
+
+digits = list(range(1,10))
+dice = random.randint(2,12)
+while b.isvalid(dice, digits) == True and sum(digits)!= 0:
+    if sum(digits)>=6:
+        dice = random.randint(2,12)
+    else:
+        dice = random.randint(1,6)
+    print('Numbers Left: {}'.format(digits))
+    print('Roll: {}'.format(dice))
+    player_input = input("Numbers to eliminate: ")
+    choice = b.parse_input(player_input, digits)
+    while sum(choice) != dice and b.isvalid(dice, digits)==True:
+        print("Invalid input")
+        player_input = input("Numbers to eliminate: ")
+        choice = b.parse_input(player_input, digits)
+    else:
+        digits = [x for x in digits if x not in choice]
+    point = str(sum(digits))
+    if sum(digits)>=6:
+        dice = random.randint(2,12)
+    else:
+        dice = random.randint(1,6)
+if point == "0":
+    print('Score for player {}: {} points'.format(name, point))
+    print("Congratulations! You shut the box")
+else:
+    print("Roll: {}".format(dice))
+    print("Game over!")
+    print('Score for player {}: {} points'.format(name, point))

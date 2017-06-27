@@ -71,7 +71,7 @@ class ComplexNumber(object):
         imag = self.imag*other.real + other.imag*self.real
         return ComplexNumber(real, imag)
 
-    def __div__(self, other):
+    def __truediv__(self, other):
         if other.real == 0 and other.imag == 0:
             raise ValueError("Cannot divide by zero")
         bottom = (other.conjugate()*other*1.).real
@@ -86,3 +86,49 @@ class ComplexNumber(object):
                                                                 abs(self.imag))
 
 # Problem 5: Write code for the Set game here
+
+class Hand(object):
+
+    def __init__(self, filename):
+
+        if filename[-4:] != ".txt":
+            raise ValueError("This is not a valid file name.")
+        self.name = filename
+        file = open(filename, 'r')
+        cards = []
+        newlines = []
+        lines = file.readlines()
+        for line in lines:
+            newlines.append(line.replace("\n",""))
+        for line in newlines:
+            if line not in cards:
+                cards.append(line)
+        for card in cards:
+            if len(card) != 4:
+                raise ValueError("There is a 'card' with invalid number of attributes.")
+            for c in card:
+                if int(c) < 0 or int(c)>2:
+                    raise ValueError("There is a 'card' with invalid attributes.")
+        if len(cards) != 12:
+            raise ValueError("There are not exactly 12 cards.")
+        self.cards = cards
+        file.close()
+
+    def setcount(self):
+        count = 0
+        def validset(card1, card2, card3):
+            checks = []
+            for i in range(4):
+                if (card1[i] == card2[i] and card1[i] == card3[i]) or (int(card1[i]) + int(card2[i]) + int(card3[i]) == 3):
+                    checks.append(True)
+            if checks == [True, True, True, True]:
+                return True
+            else:
+                return False
+
+        for i in range(10):
+            for j in range(i+1, 11):
+                for k in range(j+1,12):
+                    if validset(self.cards[i], self.cards[j], self.cards[k]):
+                        count += 1
+        return count
