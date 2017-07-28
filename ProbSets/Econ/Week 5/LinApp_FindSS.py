@@ -1,6 +1,5 @@
 '''
 Version 1.0, written by Kerk Phillips, April 2014
-
 Adapted by Yulong Li, November 2015
 '''
 import numpy as np
@@ -26,26 +25,26 @@ def LinApp_FindSS(funcname, param, guessXY, Zbar, nx, ny):
 #	Parameters
 #    -----------
 #    funcname: function
-#    the name of the function which generates a column vector 
+#    the name of the function which generates a column vector
 #    from ny+nx dynamic equations.
-#		The ny equations to be linearized into the form below in the first 
+#		The ny equations to be linearized into the form below in the first
 #		ny rows.
-#		A X(t) + B X(t-1) + C Y(t) + D Z(t) = 0 
+#		A X(t) + B X(t-1) + C Y(t) + D Z(t) = 0
 #		The function must be written so as to evaluate to zero for all rows
 #		in the steady state.
 #
 #	param: array, dtype=float
 #		a vector of parameter values to be passed to funcname.
-#	
+#
 #	guessXY: array, dtype=float
 #		guess for the steady state values of X and Y
-#	
+#
 #	Zbar: array, dtype=float
 #		nz vector of Z steady state values
-#	
+#
 #	nx: number, dtype=int
 #		number of X variables
-#	
+#
 #	ny: number, dtype=int
 #		number of Y variables
 #
@@ -59,4 +58,3 @@ def LinApp_FindSS(funcname, param, guessXY, Zbar, nx, ny):
     XYbar = opt.fsolve(f, guessXY)
 
     return XYbar
-
